@@ -3,46 +3,57 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Whycam Day Haribo Bot</title>
+  <title>Wykeham Day Haribo Bot</title>
   <style>
     body {
       display: flex;
       flex-direction: column;
-      justify-content: space-around;
+      justify-content: center;
+      gap: 2rem; /* adds consistent space between h1 and button */
       align-items: center;
       height: 100vh;
       margin: 0;
       font-family: sans-serif;
-      background: #f2f2f2;
+      background: #f9f9f9;               /* crisp white */
+      color: #222;                    /* dark grey text for less contrast strain */
+      text-shadow: none;              /* remove shadows if you’re sticking to flat design */
     }
     h1 {
       margin: 0;           /* remove default margins */
-      margin-bottom: 3rem; /* create extra space below */
-      font-size: 2.5rem;   /* bump up the size */
       text-align: center;
       line-height: 1.2;    /* tighten line spacing if you go multi-line */
+      font-size: 2.25rem;             /* slightly smaller if it feels too huge */
+      margin-bottom: 2rem;            /* balanced spacing above the button */
     }
 
     button {
       padding: 1rem 2rem;
       font-size: 1.25rem;
-      background: #28a745;
       color: #fff;
       border: none;
       border-radius: 8px;
       cursor: pointer;
+      background: #007bff;            /* nice blue pop */
+      transition: background 0.2s;    /* smooth hover effect */
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
     button:active {
-      background: #218838;
+      background: #003f7f;
+    }
+    button:hover {
+      background: #0056b3;            /* darker on hover */
     }
   </style>
 </head>
 <body>
-  <h1>Welcome to the wykeham day project</h1>
-  <button onclick="sendTrigger()">Activate Robot Arm!</button>
-
+  <h1>Welcome to the Wykeham Day project</h1>
+  <button type="button" onclick="sendTrigger()">Activate Robot Arm!</button>
+  
   <script>
     async function sendTrigger() {
+      const btn = document.querySelector('button');  // grab the button
+      btn.disabled = true;                            // disable it immediately
+  
       try {
         await fetch('https://arduino-flask-server.onrender.com/trigger', {
           method: 'POST'
@@ -50,6 +61,8 @@
         alert('Activated!');
       } catch (e) {
         alert('Oops, something went wrong.');
+      } finally {
+        btn.disabled = false;                         // re-enable when done
       }
     }
   </script>
