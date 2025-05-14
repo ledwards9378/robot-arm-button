@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Whycam Day Haribo Bot</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      font-family: sans-serif;
+      background: #f2f2f2;
+    }
+    h1 {
+      margin-bottom: 2rem;
+    }
+    button {
+      padding: 1rem 2rem;
+      font-size: 1.25rem;
+      background: #28a745;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:active {
+      background: #218838;
+    }
+  </style>
+</head>
+<body>
+  <h1>Whycam Day: Press for a Haribo!</h1>
+  <button onclick="sendTrigger()">🍬 Go!</button>
+
+  <script>
+    async function sendTrigger() {
+      try {
+        await fetch('https://arduino-flask-server.onrender.com/trigger', {
+          method: 'POST'
+        });
+        alert('Your candy is on the way!');
+      } catch (e) {
+        alert('Oops, something went wrong.');
+      }
+    }
+  </script>
+</body>
+</html>
