@@ -8,7 +8,7 @@
     body {
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: space-around;
       align-items: center;
       height: 100vh;
       margin: 0;
@@ -16,8 +16,13 @@
       background: #f2f2f2;
     }
     h1 {
-      margin-bottom: 2rem;
+      margin: 0;           /* remove default margins */
+      margin-bottom: 3rem; /* create extra space below */
+      font-size: 2.5rem;   /* bump up the size */
+      text-align: center;
+      line-height: 1.2;    /* tighten line spacing if you go multi-line */
     }
+
     button {
       padding: 1rem 2rem;
       font-size: 1.25rem;
@@ -33,8 +38,8 @@
   </style>
 </head>
 <body>
-  <h1>Whycam Day: Press for a Haribo!</h1>
-  <button onclick="sendTrigger()">🍬 Go!</button>
+  <h1>Welcome to the wykeham day project</h1>
+  <button onclick="sendTrigger()">Activate Robot Arm!</button>
 
   <script>
     async function sendTrigger() {
@@ -42,7 +47,7 @@
         await fetch('https://arduino-flask-server.onrender.com/trigger', {
           method: 'POST'
         });
-        alert('Your candy is on the way!');
+        alert('Activated!');
       } catch (e) {
         alert('Oops, something went wrong.');
       }
