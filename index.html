@@ -1,68 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Wykeham Day Haribo Bot</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Roboto&display=swap" rel="stylesheet">
   <style>
     body {
+      margin: 0;
+      height: 100vh;
+      background: linear-gradient(to right, #f8f9fa, #e3f2fd);
+      font-family: 'Roboto', sans-serif;
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      gap: 2rem; /* adds consistent space between h1 and button */
       align-items: center;
-      height: 100vh;
-      margin: 0;
-      font-family: sans-serif;
-      background: #f9f9f9;               /* crisp white */
-      color: #222;                    /* dark grey text for less contrast strain */
-      text-shadow: none;              /* remove shadows if you’re sticking to flat design */
-    }
-    h1 {
-      margin: 0;           /* remove default margins */
+      justify-content: center;
       text-align: center;
-      line-height: 1.2;    /* tighten line spacing if you go multi-line */
-      font-size: 2.25rem;             /* slightly smaller if it feels too huge */
-      margin-bottom: 2rem;            /* balanced spacing above the button */
+    }
+
+    h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: #0d47a1;
+    }
+
+    p.subtitle {
+      font-size: 1.1rem;
+      color: #444;
+      margin-bottom: 2rem;
     }
 
     button {
-      padding: 1rem 2rem;
+      background: #0d47a1;
+      color: white;
+      padding: 1rem 2.5rem;
       font-size: 1.25rem;
-      color: #fff;
       border: none;
-      border-radius: 8px;
+      border-radius: 12px;
       cursor: pointer;
-      background: #007bff;            /* nice blue pop */
-      transition: background 0.2s;    /* smooth hover effect */
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 20px rgba(13, 71, 161, 0.2);
     }
-    button:active {
-      background: #003f7f;
-    }
+
     button:hover {
-      background: #0056b3;            /* darker on hover */
+      background: #1565c0;
+      transform: scale(1.05);
+      box-shadow: 0 10px 24px rgba(13, 71, 161, 0.3);
+    }
+
+    #status {
+      margin-top: 1.5rem;
+      font-size: 1rem;
+      color: #388e3c;
     }
   </style>
 </head>
 <body>
-  <h1>Welcome to the Wykeham Day project</h1>
-  <button type="button" onclick="sendTrigger()">Activate Robot Arm!</button>
-  
+  <h1>Wykeham Day Haribo Bot</h1>
+  <p class="subtitle">Press the button to awaken the robot overlord (or just get a sweet).</p>
+  <button onclick="sendTrigger()">Activate Robot Arm!</button>
+  <p id="status"></p>
+
   <script>
     async function sendTrigger() {
-      const btn = document.querySelector('button');  // grab the button
-      btn.disabled = true;                            // disable it immediately
-  
+      const btn = document.querySelector('button');
+      const statusText = document.getElementById('status');
+      btn.disabled = true;
+      statusText.textContent = "Sending command...";
+
       try {
-        await fetch('https://arduino-flask-server.onrender.com/activate', {
-          method: 'GET'  // your route only accepts GET
+        const response = await fetch('https://arduino-flask-server.onrender.com/activate', {
+          method: 'GET'
         });
-        alert('Activated!');
-      } catch (e) {
-        alert('Oops, something went wrong.');
+        if (response.ok) {
+          statusText.textContent = "Arm activated! 🍬";
+        } else {
+          statusText.textContent = "Something went wrong. Try again.";
+        }
+      } catch (err) {
+        statusText.textContent = "Network error 😬";
       } finally {
-        btn.disabled = false;                         // re-enable when done
+        btn.disabled = false;
       }
     }
   </script>
