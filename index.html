@@ -55,8 +55,8 @@
       btn.disabled = true;                            // disable it immediately
   
       try {
-        await fetch('https://arduino-flask-server.onrender.com/trigger', {
-          method: 'POST'
+        await fetch('https://arduino-flask-server.onrender.com/activate', {
+          method: 'GET'  // your route only accepts GET
         });
         alert('Activated!');
       } catch (e) {
